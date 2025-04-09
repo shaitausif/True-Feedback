@@ -4,9 +4,13 @@ import { authOptions } from "../../auth/[...nextauth]/options";
 import dbConnect from "@/lib/dbConnect";
 import userModel from "@/model/User";
 import {User} from 'next-auth'
+import { NextRequest } from 'next/server';
 
-export async function DELETE(request : Request,{params} : {params : {messageid : string}}){
-    const messageID = params.messageid
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { messageid: string } }
+) {
+  const messageID = params.messageid;
     await dbConnect()
 
      // First work is to get the currently logged in user
