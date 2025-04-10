@@ -44,9 +44,10 @@ const MessageCard = ({ message, onMessageDelete }: MessageCardProps) => {
   };
 
   return (
-    <Card>
-      <CardHeader className="relative">
-        <CardTitle className="text-base">{message.content}</CardTitle>
+    <Card className="w-full max-w-full">
+      <CardHeader className="relative p-4 sm:p-6">
+        <CardTitle className="text-base break-words pr-10">{message.content}</CardTitle>
+
         <CardDescription className="text-xs text-muted-foreground mt-2">
           {new Date(message.createdAt).toLocaleString("en-US", {
             month: "long",

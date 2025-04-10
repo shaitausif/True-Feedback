@@ -16,7 +16,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 
-const Page = () => {
+const page = () => {
   const [messages, setmessages] = useState<Message[]>([])
   const [isLoading, setisLoading] = useState(false)
   const [isSwitchLoading, setisSwitchLoading] = useState(false)
@@ -153,71 +153,87 @@ const Page = () => {
   }
 
   return (
-    <div className='my-8 mx-4 md:mx-8 lg:mx-auto p-6 bg-white rounded w-full max-w-6xl '>
-      <h1 className='text-4xl font-bold mb-4'>User Dashboard</h1>
-      <div className='mb-4'>
-        <h2 className='text-lg font-semibold mb-2'>Copy your Unique Link</h2>{' '}
-        <div className='flex items-center'>
-          <input
-          value={profileUrl}
-          disabled
-          className='input input-bordered w-full p-2 mr-2'
-          type="text" />
-          <Button onClick={copyToClipboard}>Copy</Button>
-
-        </div>
-      </div>
-
-      <div className='mb-4'>
-        <Switch
-        {...register('acceptMessages')}
-        checked={acceptMessages}
-        onCheckedChange={handleSwitchChange}
-        disabled={isSwitchLoading}
-        />
-      <span className='ml-2'>
-        Accept Messages : {acceptMessages ? "On" : "Off"}
-      </span>
+    <div className="min-h-screen w-full px-4 sm:px-6 md:px-8 py-6 bg-white">
+      <div className="max-w-6xl mx-auto w-full">
+        <h1 className="text-2xl lg:text-center sm:text-3xl md:text-4xl font-bold mb-6 text-center md:text-left">
+          User Dashboard
+        </h1>
   
-      </div>
-      <Separator/>
-
-      <Button
-      className='mt-4'
-      variant={'outline'}
-      onClick={(e) => {
-        e.preventDefault()
-        fetchMessages(true)
-      }}
-      >
-        {
-          isLoading ? (
-            <Loader2 className='h-4 w-4 animate-spin' />
-
-          ) : (
-            <RefreshCcw className='h-4 w-4' />
-
-          )
-        }
-        
-      </Button>
-      <div className='mt-4 grid grid-cols-1 md:grid-cols-2 gap-6'>
-        {
-          messages.length > 0 ? (
+        {/* Unique Link Section */}
+        <div className="mb-6">
+          <h2 className="text-base sm:text-lg font-semibold mb-2">Copy your Unique Link</h2>
+          <div className="flex flex-col sm:flex-row gap-2 sm:items-center w-full">
+            <input
+              value={profileUrl}
+              disabled
+              className="w-full rounded-md border border-gray-300 p-2 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+              type="text"
+            />
+            <Button onClick={copyToClipboard} className="w-full sm:w-auto">
+              Copy
+            </Button>
+          </div>
+        </div>
+  
+        {/* Switch */}
+        <div className="mb-6 flex items-center gap-3 flex-wrap">
+          <Switch
+            {...register('acceptMessages')}
+            checked={acceptMessages}
+            onCheckedChange={handleSwitchChange}
+            disabled={isSwitchLoading}
+          />
+          <span className="text-sm sm:text-base">
+            Accept Messages:{" "}
+            <span className={acceptMessages ? "text-green-600" : "text-red-600"}>
+              {acceptMessages ? "On" : "Off"}
+            </span>
+          </span>
+        </div>
+  
+        <Separator className="mb-4" />
+  
+        {/* Refresh Button */}
+        <div className="mb-4 flex justify-end">
+          <Button
+            variant="outline"
+            onClick={(e) => {
+              e.preventDefault();
+              fetchMessages(true);
+            }}
+            className="flex items-center gap-2"
+          >
+            {isLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <>
+                <RefreshCcw className="h-4 w-4" />
+                Refresh
+              </>
+            )}
+          </Button>
+        </div>
+  
+        {/* Messages */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {messages.length > 0 ? (
             messages.map((message, index) => (
               <MessageCard
-              key={index}
-              message={message}
-              onMessageDelete={handleDeleteMessage}
+                key={index}
+                message={message}
+                onMessageDelete={handleDeleteMessage}
               />
-            )  )
+            ))
           ) : (
-            <p>No messages to display.</p>
-          )
-        }
+            <p className="text-center col-span-full text-muted-foreground">
+              No messages to display.
+            </p>
+          )}
+        </div>
       </div>
     </div>
-  )
+  );
+  
 }
 
-export default Page
+export default page

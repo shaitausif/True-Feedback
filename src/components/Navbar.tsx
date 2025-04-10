@@ -1,42 +1,60 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import Link from 'next/link'
 import { useSession, signOut } from 'next-auth/react'
-// importing User from next-auth
-import {User} from 'next-auth'
+import { User } from 'next-auth'
 import { Button } from './ui/button'
+import useMediaQuery from '@/hooks/useMediaQuery'
+import clsx from 'clsx'
 
 const Navbar = () => {
-  // we won't get the information about the user from this data we'll get that from the User from next-auth
-  // this data will only tell us about if the session is active or not
-  const {data: session, status} = useSession()
-  // taking data from User session
-  // To know more : https://next-auth.js.org/getting-started/client
+  const { data: session } = useSession()
   const user: User = session?.user as User
+  const isSmallScreen = useMediaQuery('(max-width: 767px)')
 
+  const [menuOpen, setMenuOpen] = useState(false)
+  const toggleMenu = () => setMenuOpen(prev => !prev)
 
-
-  // If the User is authenticated then we'll obviously have a user session
   return (
-    <nav className='p-4 md:p-6 shadow-md'>
-      <div className='container mx-auto flex  flex-row justify-around items-center'>
-        <Link className='text-xl font-bold mb-4 md:mb-0' href={'/'}>Mystery Message</Link>
-        {
-          session ? (
-            <div>
-            <span className='mr-4'>Welcome, {user?.username || user?.email}</span>
-            <Button className='w-20 md:mx-auto' onClick={() => signOut()}>Logout</Button>
-            </div>
-            // If the user is not logged in
-          ) : (
-            
-            
-            <Link href={'/sign-in'}>
-              <Button className='w-20 md:mx-auto'>Login</Button>
-            </Link>
-            
-          )
-        }      
+    <nav className='p-3 md:p-6 shadow-md'>
+      <div className='container mx-auto flex flex-row justify-between md:justify-around items-center relative'>
+        <Link className='md:text-xl text-center text-md font-bold md:mb-4' href={'/'}>Mystery Message</Link>
+
+        {session ? (
+          <div className='relative'>
+            {isSmallScreen ? (
+              <>
+                <button onClick={toggleMenu} className='font-medium'>
+                  Welcome, {user?.username || user?.email}
+                </button>
+                <div
+                  className={clsx(
+                    'absolute right-0 mt-2 bg-white border shadow-md rounded-lg z-10 transform transition-all duration-300 origin-top',
+                    menuOpen
+                      ? 'opacity-100 scale-y-100'
+                      : 'opacity-0 scale-y-0 pointer-events-none'
+                  )}
+                >
+                  <Button
+                    onClick={() => signOut()}
+                    className='block px-4 py-2 text-left w-full hover:bg-gray-100'
+                  >
+                    Logout
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <span className='mr-4'>Welcome, {user?.username || user?.email}</span>
+                <Button className='w-12 md:w-20 md:mx-auto' onClick={() => signOut()}>Logout</Button>
+              </>
+            )}
+          </div>
+        ) : (
+          <Link href={'/sign-in'}>
+            <Button className='w-12 md:w-20 md:mx-auto'>Login</Button>
+          </Link>
+        )}
       </div>
     </nav>
   )

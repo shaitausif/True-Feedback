@@ -9,6 +9,10 @@ export default {
   ],
   theme: {
   	extend: {
+		transitionProperty: {
+			width: 'width',
+			spacing: 'margin, padding',
+		  },
   		colors: {
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',

@@ -80,13 +80,13 @@ const page = () => {
               <FormLabel>Verification Code</FormLabel>
               <FormControl>
                 <Input className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0" type='number' placeholder="code" {...field} />
-              </FormControl>
+              </FormControl>  
              
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">{isVerifying && (
+        <Button disabled={isVerifying} type="submit">{isVerifying && (
           <>         
           <Loader2/>
           <p className='px-2'>Please Wait</p>

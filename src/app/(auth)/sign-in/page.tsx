@@ -108,11 +108,16 @@ const page = () => {
                      {...field}
                      
                      />
+                     
                   </FormControl>
+                  <div className="flex justify-start px-2">
+
                   
+                  <Link className="text-sm hover:text-blue-600" href={'/forget-password'}>Forgot password?</Link>
+                  </div>
                   <FormMessage />
                 </FormItem>
-              )}
+              )}  
             />
             <Button type="submit" disabled={isSubmitting}>
               {
