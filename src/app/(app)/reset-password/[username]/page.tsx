@@ -92,6 +92,7 @@ const page = () => {
                     <Input disabled={isSubmitting}
                       placeholder="Enter new password.."
                       {...field}
+                      type='password'
                       onChange={(e) => field.onChange(e)}
                       className="h-12"
                     />
@@ -112,6 +113,7 @@ const page = () => {
                     <Input disabled={isSubmitting}
                       placeholder="Confirm new password..."
                       {...field}
+                      type='password'
                       onChange={(e) => field.onChange(e)}
                       className="h-12"
                     />

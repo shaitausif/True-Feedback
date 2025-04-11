@@ -130,7 +130,9 @@ const page = () => {
                   <p className={`text-sm ${usernameMessage === "Username is available" ? 'text-green-500' : 'text-red-500'}`}>
                       {usernameMessage}
                   </p>
+                 {!usernameMessage && (
                   <FormMessage />
+                 )} 
                 </FormItem>
               )}
             />

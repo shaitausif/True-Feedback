@@ -61,7 +61,7 @@ export async function POST(request : Request){
             expiryDate.setHours(expiryDate.getHours() + 1)
 
             // save User in the database
-            const newUser = await new userModel({
+            const newUser =  new userModel({
                     username,
                     email,
                     password: hashedPassword,

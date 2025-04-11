@@ -13,6 +13,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ApiResponse } from '@/types/ApiResponse';
 import { Loader2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from '@/components/ui/input-otp';
 
 
 
@@ -170,7 +171,14 @@ const page = () => {
             </Form>
            {isOtpSent && (
                  <Form {...form2}>
-                 <form onSubmit={form2.handleSubmit(verifyCode)}>
+                 <form onSubmit={form2.handleSubmit(verifyCode)}
+                 onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault();
+                    form2.handleSubmit(verifyCode)();
+                  }
+                }}
+                 >
                  <FormField
                control={form2.control}
                name="code"
@@ -178,15 +186,34 @@ const page = () => {
                  <FormItem>
                    <FormLabel className="text-gray-700">Enter Verification Code</FormLabel>
                    <FormControl>
-                     <Input type='number'
-                       placeholder="Enter Verification Code Sent to your E-Mail-ID"
-                       {...field}
-                       onChange={(e) => field.onChange(e)}
-                       className="appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 h-12"
-                     />
+                   <div className="flex justify-center">
+                                            <InputOTP
+                                                maxLength={6}
+                                                value={field.value}
+                                                onChange={field.onChange}
+                                                onKeyPress={(e) => {
+                                                    if (!/[0-9]/.test(e.key)) {
+                                                        e.preventDefault();
+                                                    }
+                                                }}
+                                            >
+                                                <InputOTPGroup>
+                                                    <InputOTPSlot index={0} />
+                                                    <InputOTPSlot index={1} />
+                                                    <InputOTPSlot index={2} />
+                                                </InputOTPGroup>
+                                                <InputOTPSeparator />
+                                                <InputOTPGroup>
+                                                    <InputOTPSlot index={3} />
+                                                    <InputOTPSlot index={4} />
+                                                    <InputOTPSlot index={5} />
+                                                </InputOTPGroup>
+                                            </InputOTP>
+                                        </div>
                    </FormControl>
-                   
+                   <div className='flex justify-center'>
                    <FormMessage />
+                   </div>
                  </FormItem>
                )}
              />
