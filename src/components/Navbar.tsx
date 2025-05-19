@@ -18,7 +18,7 @@ const Navbar = () => {
   return (
     <nav className='p-3 md:p-6 shadow-md'>
       <div className='container mx-auto flex flex-row justify-between md:justify-around items-center relative'>
-        <Link className='md:text-xl text-center text-md font-bold md:mb-4' href={'/'}>Mystery Message</Link>
+        <Link className='md:text-xl text-center text-md font-bold md:mb-4' href={'/'}>True Feedback</Link>
 
         {session ? (
           <div className='relative'>
