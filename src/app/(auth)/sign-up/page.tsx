@@ -101,7 +101,7 @@ const page = () => {
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h2 className="text-4xl font-bold tracking-tight lg:text-5xl mb-6">
-            Join Mystery Message
+            Join True Feedback
           </h2>
           <p className="mb-4">Sign Up to start your anonymous adventure</p>
         </div>
